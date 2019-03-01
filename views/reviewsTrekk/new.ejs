@@ -1,0 +1,58 @@
+<% include ../partials/header %>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card customBorder2">
+                <div class="card-body">
+                    <h3 class="card-title">Make a review</h3>
+                    <form action="/activities/trekkings/<%=foundTrekk._id%>/reviews" method="POST">
+                        <div class="form-group">
+                            <label for="rating"><h5>Give a rating:</h5></label>
+                            <fieldset class="starability-basic form-group" id="rating">
+                                <div>
+                                    <input type="radio" id="rating5" name="review[rating]" value="5">
+                                    <label for="rating5">
+                                       <%- '<span class="fa fa-star checked"></span>'.repeat(5) %>
+                                    </label>
+                                </div>
+                                <div>
+                                    <input type="radio" id="rating4" name="review[rating]" value="4">
+                                    <label for="rating4">
+                                       <%- '<span class="fa fa-star checked"></span>'.repeat(4) %>
+                                    </label>
+                                </div>
+                                <div>
+                                    <input type="radio" id="rating3" name="review[rating]" value="3">
+                                    <label for="rating3">
+                                       <%- '<span class="fa fa-star checked"></span>'.repeat(3) %>
+                                    </label>
+                                </div>
+                                <div>
+                                    <input type="radio" id="rating2" name="review[rating]" value="2">
+                                    <label for="rating2">
+                                       <%- '<span class="fa fa-star checked"></span>'.repeat(2) %>
+                                    </label>
+                                </div>
+                                <div>
+                                    <input type="radio" id="rating1" name="review[rating]" value="1">
+                                    <label for="rating1">
+                                       <%- '<span class="fa fa-star checked"></span>'.repeat(1) %>
+                                    </label>
+                                </div>
+                            </fieldset>
+                        </div>
+                        <div class="form-group">
+                            <textarea type="text" class="form-control" form="add-review-form" name="review[text]" placeholder="Write a review..." rows="5"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <button class="btn btn-info btn-md">Submit this Review</button>
+                        </div>
+                    </form> 
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<% include ../partials/footer %>

@@ -1,0 +1,138 @@
+<% include ../partials/header %>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-3">
+            <ul class="list-group">
+              <li class="list-group-item">Cras justo odio</li>
+              <li class="list-group-item">Dapibus ac facilisis in</li>
+              <li class="list-group-item">Morbi leo risus</li>
+              <li class="list-group-item">Porta ac consectetur ac</li>
+              <li class="list-group-item">Vestibulum at eros</li>
+            </ul>
+        </div> <!-- End col-md-3 -->
+        <div class="col-md-9">
+            <div class="card mb-2">
+                <div class="card-header text-center"><h2 class="display-5 text-primary"><%=trekkingGround.title%></h2></div>
+                <img alt="an trekking image" class="card-img-top" src="<%= trekkingGround.image %>">
+                <div class="card-body">
+                    <h3 class="card-title d-inline"><%= trekkingGround.title %></h3>
+                    <% if(currentUser && trekkingGround.author.id.equals(currentUser._id)) { %>
+                        <div class="float-right">
+                            <a class="btn btn-dark btn-sm text-white" href="/activities/trekkings/<%= trekkingGround._id%>/edit">Edit</a>
+                            <form class="d-inline" action="/activities/trekkings/<%=trekkingGround._id%>?_method=DELETE" method="POST">
+                                <button class="btn btn-danger btn-sm">Delete</button> 
+                            </form>
+                        </div>
+                    <% } %>
+                    <p class="m-0">Posted by : <em><strong><%= trekkingGround.author.username%></strong>, <%= moment(trekkingGround.created).fromNow() %></em></p>
+                    <p class="card-text lead"><%= trekkingGround.description %></p>
+                </div>
+            </div> <!-- End card -->
+
+            <!--REVIEW SECTION-->
+            <div class="row mb-2">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <h4 class="d-inline text-secondary"><em>No reviews yet</em></h4>
+                                <a class="btn btn-md btn-primary ml-2"  href="/activities/trekkings/<%=trekkingGround._id%>/reviews/new">Write a new review</a>
+                            </div>
+                        </div>    
+                    </div>    
+                </div>    
+            </div> 
+            
+            <!-- COMMENT SECTION -->
+            <div class="row mb-2">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="mb-4">
+                                <a class="btn btn-md btn-success float-right" role="button" data-toggle="collapse" href="#collapseCommentForm" aria-expanded="false" aria-controls="collapseCommentForm">
+                                    <i class="fas fa-plus text-white"></i> Add new comment
+                                </a>
+                                <h4 class="card-title">Comments <i class="far fa-comment"></i></h4>
+                            </div>
+                            
+                            <!--ADD new comment form-->
+                            <div class="collapse mb-2" id="collapseCommentForm">
+                                <div class="card customBorder">
+                                    <div class="card-body">
+                                        <% if(!currentUser){ %>
+                                            <!--If the user is not logged in, direct him to the login page-->
+                                            <h5>You need to login before you can comment. <a href="/login">Click here</a> to go to the login page.</h5>
+                                        <% } %>
+                                        <% if(currentUser){ %>
+                                            <h4>Write your comment <i class="fas fa-pencil-alt"></i></h4>
+                                            <form id="add-comment-form" action="/activities/trekkings/<%=trekkingGround._id%>/comments" method="POST">
+                                                <div class="form-group">
+                                                    <input class="form-control" type="text" value="<%= currentUser.username%>" disabled>
+                                                </div>
+                                                <div class="form-group">
+                                                    <textarea name="newComment[text]" class="form-control" placeholder="Write your comment..." form="add-comment-form" rows="5" cols="70"></textarea>
+                                                </div>
+                                                <div class="form-group">
+                                                  <button class="btn btn-success btn-sm">Comment <i class="fas fa-comment text-white"></i></button>
+                                                </div>
+                                            </form>
+                                       <% } %>
+                                    </div>
+                                </div>
+                            </div> <!--- end comment form---->
+                            
+                            <!-- Show all comments-->
+                            <% if(trekkingGround.comments.length === 0){ %>
+                                <h4>No comments yet</h4>
+                            <% } else { %>
+                            <% trekkingGround.comments.forEach(function(allComment){ %>
+                            <div class="card mb-1">  
+                                <div class="card-body">
+                                    <span class="card-title"><Strong><em> <%=allComment.author.username%></em></Strong> :&nbsp;</span>
+                                    <p class="card-text d-inline"> <%=allComment.text%></p>
+                                    <% if(currentUser && allComment.author.id.equals(currentUser._id)){ %>
+                                        <div class="float-right">
+                                            <a class="btn btn-sm btn-secondary mr-1 ml-4 text-white" role="button" data-toggle="collapse" href="#collapseEdit<%= allComment._id %>" aria-expanded="false" aria-controls="collapse<%= allComment._id %>">Edit</a>
+                                            <form class="d-inline" action="/activities/trekkings/<%=trekkingGround._id%>/comments/<%=allComment.id%>?_method=DELETE" method="POST">
+                                                 <button class="btn btn-sm btn-danger float-right">Delete</button>
+                                            </form>
+                                        </div>
+                                    <% } %>  
+                                        <span class="float-right"><%= moment(allComment.createdAt).fromNow()%></span>
+                                </div>
+                            </div> 
+                            
+                            <!-- EDIT comment form -->
+                            <% if(currentUser && allComment.author.id.equals(currentUser._id)){ %>
+                                <div class="collapse mt-1 mb-1" id="collapseEdit<%= allComment._id %>">
+                                     <div class="card customBorder">
+                                        <div class="card-body">
+                                            <h4>Edit your comment <i class="far fa-edit"></i></h4>
+                                            <form id="add-comment-form<%=allComment._id%>" action="/activities/trekkings/<%=trekkingGround._id%>/comments/<%=allComment._id%>?_method=PUT" method="POST">
+                                                <div class="form-group">
+                                                    <input class="form-control" type="text" value="<%= currentUser.username%>" disabled>
+                                                </div>
+                                                <div class="form-group">
+                                                    <textarea name="newComment[text]" class="form-control" placeholder="your comment" rows="5" cols="70" form="add-comment-form<%=allComment._id%>"><%= allComment.text %>
+                                                    </textarea>
+                                                </div>
+                                                <button name="submit" class="btn btn-success btn-md">Save! <span class="fas fa-save text-white"></span></button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div> <!-- End edit comment form -->
+                            <% } %>
+                            <% }); %>
+                            <% } %>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div> <!-- End Main col-md-9 --> 
+    </div> <!-- End row -->
+</div> <!-- End container -->
+
+
+<% include ../partials/footer %>

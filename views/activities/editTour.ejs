@@ -1,0 +1,38 @@
+<% include ../partials/header %>
+
+<div class="container">
+    <h1 class="display-3 text-info text-center">Edit This Tour</h1>
+    <div class="jumbotron">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <form action="/activities/tours/<%=tour._id%>?_method=PUT" method="POST" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="title" value="<%=tour.title%>">
+                    </div>
+                    <div class="form-group">
+                        <label for="image">Edit your image</label>
+                        <input type="file" id="image" name="image" accept="image/*" class="form-control">
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-6">
+                          <input type="number" class="form-control" id="inputEmail3" name="minimumMembers" value="<%=tour.minimumMembers%>">
+                        </div>
+                        <div class="col-sm-6">
+                          <input type="number" class="form-control" id="inputEmail3" name="maximumMembers" value="<%=tour.maximumMembers%>">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <textarea name="description" class="form-control" rows="3"><%=tour.description%></textarea>
+                    </div>
+                    <button name="submit" class="btn btn-danger btn-lg btn-block">Save!</button>
+                </form>
+            </div>
+        </div> <!-- End row -->
+    </div> <!-- End jumbotron -->
+</div> <!-- End container -->
+
+
+
+
+
+<% include ../partials/footer %>

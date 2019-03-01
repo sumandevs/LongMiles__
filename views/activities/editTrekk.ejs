@@ -1,0 +1,27 @@
+<% include ../partials/header %>
+
+<div class="container">
+    <h1 class="display-3 text-info text-center">Edit this trekking activity</h1>
+    <div class="jumbotron">
+        <div class="row justify-content-center">
+            <div class="col-4">
+                <form action="/activities/trekkings/<%=trekk._id%>?_method=PUT" method="POST" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <input type="text" class="form-control" value="<%= trekk.title %>" name="title">
+                    </div>
+                    <div class="form-group">
+                        <label for="image">Edit your image</label>
+                        <input type="file" id="image" name="image" accept="image/*" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <textarea name="description" class="form-control" rows="3"><%= trekk.description %></textarea>
+                    </div>
+                    <button name="submit" class="btn btn-danger btn-lg btn-block">Save!</button>
+                </form>
+            </div>
+        </div> <!-- End row -->
+    </div> <!-- End jumbotron -->
+</div> <!-- End container -->
+
+
+<% include ../partials/footer %>

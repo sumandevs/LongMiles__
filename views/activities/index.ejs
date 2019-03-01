@@ -1,0 +1,63 @@
+<% include ../partials/header %>
+
+<div class="container text-center">
+    <div class="jumbotron">
+        <h1 class="display-3 text-info">This is show page of Activities</h1>
+    </div>
+</div>
+
+<section id="recentTrekkings">
+    <div class="container trekks">
+        <i class="fas fa-campground fa-7x"></i>
+        <h2 class="heading">Trekking Activities</h2>
+        <hr class="hrTrek">
+        <div class="row">
+            <% allTrekkings.forEach(function(TrekkingActivity){ %>
+            <div class="col-md-6 col-lg-4 col-xl-4 mb-4">
+                <div class="card text-center">
+                    <div class=card-header><h4><%=TrekkingActivity.title%></h4></div>
+                    <img class="card-img-top" alt="activity image" src="<%=TrekkingActivity.image%>" style="height: 230px">
+                    <div class="card-body">
+                        <h3 class="card-title"><%=TrekkingActivity.title%></h3>
+                        <p class="card-text"><%=TrekkingActivity.description.substring(0,120)%></p>
+                        <a class="btn btn-primary btn-md" href="/activities/trekkings/<%=TrekkingActivity._id%>">View this activity</a>
+                    </div>
+                </div> <!--End Card -->
+            </div> <!--End col-md-4 -->
+            <% }); %>
+        </div> <!-- End row -->
+    </div> <!-- End container -->
+</section>
+
+<section id="recentTours">
+    <div class="container tours">
+        <i class="fas fa-mountain fa-7x"></i></i>
+        <h2 class="heading">Tour Activities</h2>
+        <hr class="hrTour">
+        <div class="row">
+            <% allTours.forEach(function(TourActivity){ %>
+            <div class="col-md-6 col-lg-4 col-xl-4 mb-4">
+                <div class="card text-center">
+                    <div class=card-header><h4><%=TourActivity.title%></h4></div>
+                    <img class="card-img-top" alt="activity image" src="<%=TourActivity.image%>" style="height: 230px">
+                    <div class="card-body">
+                        <h3 class="card-title"><%=TourActivity.title%></h3>
+                        <span class="card-text"><strong><em>Min. Members:</em></strong> <%=TourActivity.minimumMembers%></span>
+                        <span class="card-text"><strong><em>Min. Members:</em></strong> <%=TourActivity.maximumMembers%></span>
+                        <p class="card-text"><%=TourActivity.description.substring(0,120)%></p>
+                        <a class="btn btn-primary btn-md" href="/activities/tours/<%=TourActivity._id%>">View this activity</a>
+                    </div>
+                </div> <!--End Card -->
+            </div> <!--End col-md-4 -->
+            <% }); %>
+        </div> <!-- End row -->
+    </div> <!-- End container -->
+</section>
+
+
+
+
+
+
+
+<% include ../partials/footer %>
